@@ -71,9 +71,11 @@
 }
 
 .product-item .inner-content .inner-discount {
-  width: 50px;
-  padding: 2px 6px;
+  min-width: 60px;
+  padding: 2px 5px;
   color: #fff;
   background-color: red;
   border-radius: 8px;
+  display: inline-block;
+  white-space: nowrap;
 }
