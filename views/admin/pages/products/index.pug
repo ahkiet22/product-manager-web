@@ -1,0 +1,27 @@
+extends ../../layouts/default.pug
+
+block main
+  h1 Danh sach san pham
+
+  table.table.table-hover.table-sm 
+    thead 
+      tr 
+       th STT
+       th Hình ảnh
+       th Tiêu đề
+       th Giá
+       th Trạng thái
+       th Aciton
+    
+    tbody 
+      tr  
+        td 1
+        td  
+          img(src="https://cdnv2.tgdd.vn/mwg-static/common/News/1569924/9.jpg", alt="Sản phẩm 1" width="100px" height="auto")
+        td Sản phẩm 1
+        td 100$
+        td
+          a(href="#" class="badge badge-success") Hoạt động 
+        td 
+          button(class="btn btn-warning btn-sm") Sửa 
+          button(class="btn btn-danger btn-sm ml-1") Xóa
