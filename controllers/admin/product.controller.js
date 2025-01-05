@@ -20,20 +20,29 @@ module.exports.index = async (req, res) => {
   ];
   // console.log(req.query.status);
   if (req.query.status) {
-    const index = filterStatus.findIndex(item => item.status == req.query.status);
-    filterStatus[index].class = "active"
+    const index = filterStatus.findIndex(
+      (item) => item.status == req.query.status
+    );
+    filterStatus[index].class = "active";
   } else {
-    const index = filterStatus.findIndex(item => item.status == "");
-    filterStatus[index].class = "active"
+    const index = filterStatus.findIndex((item) => item.status == "");
+    filterStatus[index].class = "active";
   }
-  
+
   let find = {
     deleted: false,
   };
 
-
   if (req.query.status) {
     find.status = req.query.status;
+  }
+
+  let keyword = "";
+
+  if (req.query.keyword) {
+    keyword = req.query.keyword;
+
+    find.title = keyword;
   }
 
   const products = await Product.find(find);
@@ -44,5 +53,6 @@ module.exports.index = async (req, res) => {
     pageTitle: "Danh sách sản phẩm",
     products: products,
     filterStatus: filterStatus,
+    keyword: keyword,
   });
 };
