@@ -5,9 +5,8 @@ const searchHelper = require("../../helpers/search");
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
-  
   // Loc sp
-  const filterStatus = filterStatusHelper(req.query)
+  const filterStatus = filterStatusHelper(req.query);
 
   let find = {
     deleted: false,
@@ -23,7 +22,26 @@ module.exports.index = async (req, res) => {
     find.title = objectSearch.regex;
   }
 
-  const products = await Product.find(find);
+  // Pagination
+  let objectPagination = {
+    currentPage: 1,
+    limitItem: 4,
+  };
+  if (req.query.page) {
+    objectPagination.currentPage = parseInt(req.query.page);
+  }
+  objectPagination.skip =
+    (objectPagination.currentPage - 1) * objectPagination.limitItem;
+
+  const countProducts = await Product.countDocuments(find);
+  const totalPage = Math.ceil(countProducts / objectPagination.limitItem);
+  objectPagination.totalPage = totalPage;
+  // console.log(countProducts);
+  // End Pagination
+
+  const products = await Product.find(find)
+    .limit(objectPagination.limitItem)
+    .skip(objectPagination.skip);
 
   // console.log(products)
 
@@ -32,5 +50,6 @@ module.exports.index = async (req, res) => {
     products: products,
     filterStatus: filterStatus,
     keyword: objectSearch.keyword,
+    pagination: objectPagination,
   });
 };
