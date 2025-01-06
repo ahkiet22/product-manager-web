@@ -42,7 +42,9 @@ module.exports.index = async (req, res) => {
   if (req.query.keyword) {
     keyword = req.query.keyword;
 
-    find.title = keyword;
+    const regex = new RegExp(keyword, "i");
+    // console.log(regex);
+    find.title = regex;
   }
 
   const products = await Product.find(find);
