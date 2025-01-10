@@ -77,15 +77,15 @@ module.exports.changeMulti = async (req, res) => {
   switch (type) {
     case "active":
       await Product.updateMany(
-        { _id: {$in: id}},
-        {$set: {status: "active"}}
-      )
+        { _id: { $in: id } },
+        { $set: { status: "active" } }
+      );
       break;
     case "inactive":
       await Product.updateMany(
-        { _id: {$in: id}},
-        {$set: {status: "inactive"}}
-      )
+        { _id: { $in: id } },
+        { $set: { status: "inactive" } }
+      );
       break;
     default:
       break;
@@ -94,3 +94,9 @@ module.exports.changeMulti = async (req, res) => {
   res.redirect("back");
 };
 
+// [DELETE] /admin/products/delete/:id
+module.exports.deleteItem = async (req, res) => {
+  const id = req.params.id;
+  await Product.deleteOne({ _id: id });
+  res.redirect("back");
+};
