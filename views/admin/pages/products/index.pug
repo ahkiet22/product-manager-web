@@ -30,6 +30,7 @@ block main
             th Hình ảnh
             th Tiêu đề
             th Giá
+            th Vị trí
             th Trạng thái
             th Aciton
         
@@ -43,6 +44,8 @@ block main
                 img(src=item.thumbnail alt=item.title width="100px" height="auto")
               td #{item.title}
               td #{item.price}$
+              td
+                input(type="number" value=item.position style="width: 60px" min="1" name="position")
               td
                 if(item.status == "active")
                   a(
