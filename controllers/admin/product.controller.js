@@ -87,6 +87,11 @@ module.exports.changeMulti = async (req, res) => {
         { $set: { status: "inactive" } }
       );
       break;
+    case "delete-all":
+      await Product.updateMany(
+        { _id: { $in: id } },
+        { $set: { deleted: true, deletedAt: new Date() } }
+      );
     default:
       break;
   }
@@ -98,9 +103,12 @@ module.exports.changeMulti = async (req, res) => {
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id;
   // await Product.deleteOne({ _id: id }); // Xóa cứng
-  await Product.updateOne({ _id: id }, {
-    deleted: true,
-    deletedAt: new Date()
-  }); // Xóa mềm
+  await Product.updateOne(
+    { _id: id },
+    {
+      deleted: true,
+      deletedAt: new Date(),
+    }
+  ); // Xóa mềm
   res.redirect("back");
 };
