@@ -72,10 +72,10 @@ block main
                   ) Dừng hoạt động
               td 
                 if(statusBin == "bin")
-                  button(class="btn btn-warning btn-sm") Khôi phục
+                  button(class="btn btn-warning btn-sm" button-restore data-id=item.id) Khôi phục
                 else 
-                  button(class="btn btn-warning btn-sm" button-delete data-id=item.id) Sửa
-                button(class="btn btn-danger btn-sm ml-1" button-restore data-id=item.id) Xóa
+                  button(class="btn btn-warning btn-sm") Sửa
+                button(class="btn btn-danger btn-sm ml-1" button-delete data-id=item.id) Xóa
 
 
   +pagination(pagination)
@@ -85,5 +85,8 @@ block main
   form(action="" method="POST" id="form-delete-item" data-path=`${prefixAdmin}/products/delete`)
     .form-group 
         input(type="text" name="typeAction" value="" class="form-control d-none")
+
+  form(action="" method="POST" id="form-restore-item" data-path=`${prefixAdmin}/products/restore`)
+  
 
   script(src="/admin/js/product.js")

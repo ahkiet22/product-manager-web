@@ -131,3 +131,12 @@ module.exports.deleteItem = async (req, res) => {
   req.flash("success", `Đã xóa thành công sản phẩm!`);
   res.redirect("back");
 };
+
+// [PATCH] /admin/products/restore/:id
+module.exports.restoreItem = async (req, res) => {
+  const id = req.params.id;
+  await Product.updateOne({ _id: id }, { deleted: false });
+
+  req.flash("success", "Khôi phục thành công");
+  res.redirect("back");
+};

@@ -9,6 +9,8 @@ router.patch("/change-status/:status/:id", controller.changeStatus);
 
 router.patch("/change-multi", controller.changeMulti);
 
+router.patch("/restore/:id", controller.restoreItem);
+
 router.delete("/delete/:id", controller.deleteItem);
 
 module.exports = router;
