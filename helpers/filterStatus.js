@@ -15,6 +15,11 @@ module.exports = (query) => {
       status: "inactive",
       class: "",
     },
+    {
+      name: "Sản phẩm đã xóa",
+      status: "bin",
+      class: "",
+    },
   ];
   // console.log(req.query.status);
   if (query.status) {
