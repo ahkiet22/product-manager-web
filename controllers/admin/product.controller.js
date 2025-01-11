@@ -14,7 +14,7 @@ module.exports.index = async (req, res) => {
   };
 
   if (req.query.status) {
-    if(req.query.status == "bin") {
+    if (req.query.status == "bin") {
       find.deleted = true;
     } else {
       find.status = req.query.status;
@@ -44,13 +44,12 @@ module.exports.index = async (req, res) => {
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
 
-  // console.log(products)
-
   res.render("admin/pages/products/index.pug", {
     pageTitle: "Danh sách sản phẩm",
     products: products,
     filterStatus: filterStatus,
     keyword: objectSearch.keyword,
+    statusBin: req.query.status,
     pagination: objectPagination,
   });
 };
@@ -97,10 +96,7 @@ module.exports.changeMulti = async (req, res) => {
         { _id: { $in: ids } },
         { $set: { deleted: true, deletedAt: new Date() } }
       );
-      req.flash(
-        "success",
-        `Đã xóa thành công ${ids.length} sản phẩm!`
-      );
+      req.flash("success", `Đã xóa thành công ${ids.length} sản phẩm!`);
     case "change-position":
       for (const item of ids) {
         let [id, position] = item.split("-");
@@ -121,17 +117,17 @@ module.exports.changeMulti = async (req, res) => {
 // [DELETE] /admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id;
-  // await Product.deleteOne({ _id: id }); // Xóa cứng
-  await Product.updateOne(
-    { _id: id },
-    {
-      deleted: true,
-      deletedAt: new Date(),
-    }
-  ); // Xóa mềm
-  req.flash(
-    "success",
-    `Đã xóa thành công sản phẩm!`
-  );
+  if (req.body.typeAction === "bin") {
+    await Product.deleteOne({ _id: id }); // Xóa cứng
+  } else {
+    await Product.updateOne(
+      { _id: id },
+      {
+        deleted: true,
+        deletedAt: new Date(),
+      }
+    ); // Xóa mềm
+  }
+  req.flash("success", `Đã xóa thành công sản phẩm!`);
   res.redirect("back");
 };
