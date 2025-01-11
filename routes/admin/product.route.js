@@ -13,4 +13,8 @@ router.patch("/restore/:id", controller.restoreItem);
 
 router.delete("/delete/:id", controller.deleteItem);
 
+router.get("/create", controller.create);
+
+router.post("/create", controller.createPost);
+
 module.exports = router;
