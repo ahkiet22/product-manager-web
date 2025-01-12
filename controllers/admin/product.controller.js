@@ -99,16 +99,18 @@ module.exports.changeMulti = async (req, res) => {
         { $set: { deleted: true, deletedAt: new Date() } }
       );
       req.flash("success", `Đã xóa thành công ${ids.length} sản phẩm!`);
+      break;
     case "change-position":
       for (const item of ids) {
         let [id, position] = item.split("-");
         position = parseInt(position);
         await Product.updateOne({ _id: id }, { position: position });
-        req.flash(
-          "success",
-          `Đã đổi vị trí thành công ${ids.length} sản phẩm!`
-        );
       }
+      req.flash(
+        "success",
+        `Đã đổi vị trí thành công ${ids.length} sản phẩm!`
+      );
+      break;
     default:
       break;
   }
@@ -163,7 +165,7 @@ module.exports.createPost = async (req, res) => {
     req.body.position = parseInt(req.body.position);
   }
   req.body.thumbnail = `/uploads/${req.file.filename}`;
-  
+
   const product = new Product(req.body);
   await product.save();
 
