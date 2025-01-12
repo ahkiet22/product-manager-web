@@ -51,7 +51,7 @@ if (ButtonsPagination.length) {
     });
   });
 }
-// Endl Pagination
+// End Pagination
 
 // Checkbox Multi
 const checkboxMulti = document.querySelector("[checkbox-multi]");
@@ -146,3 +146,18 @@ if (showAlert) {
   });
 }
 // End Show Alert
+
+// Upload Image
+const UploadImage = document.querySelector("[upload-image]");
+if (UploadImage) {
+  const uploadImageInput = document.querySelector("[upload-image-input]");
+  const uploadImagePreview = document.querySelector("[upload-image-preview]");
+  uploadImageInput.addEventListener("change", (e) => {
+    // const [file] = e.target.files; // cú pháp destructuring
+    const file = e.target.files[0];
+    if (file) {
+      uploadImagePreview.src = URL.createObjectURL(file);
+    }
+  });
+}
+// End Upload Image
