@@ -79,6 +79,7 @@ block main
                     class="badge badge-danger"
                   ) Dừng hoạt động
               td 
+                a(href=`${prefixAdmin}/products/detail/${item.id}` class="btn btn-secondary btn-sm mr-1") Chi tiết
                 if(statusBin == "bin")
                   button(class="btn btn-warning btn-sm" button-restore data-id=item.id) Khôi phục
                 else 
