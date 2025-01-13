@@ -1,0 +1,29 @@
+extends ../../layouts/default.pug
+
+block main 
+  .container.my-3 
+    .row 
+      .col-12 
+        div(class="d-flex align-items-center justify-content-around p-3 rounded-lg shadow-lg")
+          div(class="w-50 d-flex align-items-center justify-content-center")
+            if(product.thumbnail) 
+              div(class="mb-4")
+                img(src=product.thumbnail class="w-100 h-auto")
+          div(class="w-50")
+            if(product.title)
+              h1(class="mb-4 text-warning") #{product.title}
+
+            if(product.price)
+              div(class="mb-4") Giá: <b>#{product.price}$</b>
+
+            if(product.discountPercentage)
+              div(class="mb-4") Giảm giá: <b>#{product.discountPercentage}%</b>
+
+            if(product.description)
+                div(class="mb-4 border-bottom border-top") #{product.description}
+
+            if(product.stock)
+              div(class="mb-4") Còn lại: <b>#{product.stock}</b>
+ 
+            if(product.position)
+              div(class="mb-4") Vị trí: <b>#{product.position}</b>
