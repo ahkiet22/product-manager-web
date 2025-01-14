@@ -40,9 +40,19 @@ module.exports.index = async (req, res) => {
     req.query,
     countProducts
   );
+  // End Pagination
 
+  // Sort
+  let sort = {};
+
+  if (req.query.sortKey && req.query.sortValue) {
+    sort[req.query.sortKey] = req.query.sortValue;
+  } else {
+    sort.position = "desc";
+  }
+  // End Sort
   const products = await Product.find(find)
-    .sort({ position: "desc" })
+    .sort(sort)
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
 
@@ -201,9 +211,9 @@ module.exports.editPatch = async (req, res) => {
 
   try {
     await Product.updateOne({ _id: id }, req.body);
-    req.flash("success", "Cập nhập sản phẩm thành công!")
+    req.flash("success", "Cập nhập sản phẩm thành công!");
   } catch (error) {
-    req.flash("error", "Cập nhập sản phẩm thất bại!")
+    req.flash("error", "Cập nhập sản phẩm thất bại!");
   }
 
   res.redirect("back");
