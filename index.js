@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 var methodOverride = require("method-override");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
@@ -31,6 +32,10 @@ app.use(cookieParser("JSASDJLENVEA"));
 app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 // End Flash
+
+// TinyMCE 
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+// End TinyMCE 
 
 // App Locals Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
