@@ -9,7 +9,7 @@ block main
   form(
     action=`${prefixAdmin}/products-category/create`
     method="POST"
-    enctype="mulypart/form-data"
+    enctype="multipart/form-data"
   ) 
     div(class="form-group")
       label(for="title") Tiêu đề
@@ -44,9 +44,9 @@ block main
         class="form-control-file"
         id="thumbnail"
         name="thumbnail"
-        accpect="image/*"
+        accept="image/*"
         upload-image-input
-      ) 
+      )
       img(
         src=""
         class="image-preview"

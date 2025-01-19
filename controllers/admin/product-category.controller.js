@@ -23,7 +23,7 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products-category/create
 module.exports.createPost = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   if (req.body.position == "") {
     const count = await ProductCategory.countDocuments();
     req.body.position = count + 1;
