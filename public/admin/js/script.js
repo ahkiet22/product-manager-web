@@ -196,3 +196,9 @@ if (sort) {
   }
 }
 // End Sort
+
+// Tooltips (bootstrap)
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+// End Tooltips
