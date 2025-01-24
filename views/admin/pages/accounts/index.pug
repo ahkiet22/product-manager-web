@@ -1,0 +1,68 @@
+extends ../../layouts/default.pug
+
+block main 
+
+  h1(Class="mb-4") Danh sách tài khoản
+
+  .card.mb-3 
+    .card-header Danh sách 
+    .card-body 
+      .row 
+        .col-8 
+        .col-4.text-right 
+          a(
+            href=`${prefixAdmin}/accounts/create`
+            class="btn btn-outline-success"
+          ) + Thêm mới
+      
+      table.table.table-hover.mb-0  
+        thead.bg-light  
+          tr   
+            th(width="5%") STT 
+            th(width="15%") Avatar  
+            th(width="20%") Full Name  
+            th(width="15%") Permission  
+            th(width="20%") Email  
+            th(width="10%") Status  
+            th(width="15%") Actions  
+        tbody   
+          if (records.length > 0)  
+            each item, index in records   
+              tr(data-href=`${prefixAdmin}/accounts/detail/${item.id}`) 
+                td.align-middle.not-click #{index + 1}  
+                td.align-middle  
+                  img.rounded-circle(  
+                      src=(item.avatar ? item.avatar : "/images/avatar.png") 
+                      alt=item.fullName  
+                      width="40"  
+                      height="40"  
+                  )  
+                td.align-middle #{item.fullName}  
+                td.align-middle  
+                  span.badge.badge-info.not-click #{item.role.title}  
+                td.align-middle #{item.email} 
+                td.align-middle 
+                  if(item.status === "active")
+                    a(
+                      href="javascript:;"
+                      class="badge badge-success"
+                      data-status="active"
+                    ) Hoạt động
+                  else 
+                    a(
+                      href="javascript:;"
+                      class="badge badge-danger"
+                      data-status="inactive"
+                    ) Dừng hoạt động
+                td.d-flex
+                  a(href=`${prefixAdmin}/accounts/detail/${item.id}` data-toggle="tooltip", data-placement="top", title="Chi tiết" class="btn btn-secondary btn-sm mr-1")
+                    i.fa-solid.fa-info.p-1
+                  a(href=`${prefixAdmin}/accounts/edit/${item.id}` data-toggle="tooltip", data-placement="top", title="Chỉnh sửa" class="btn btn-warning btn-sm")
+                    i.fa-solid.fa-pen-to-square.text-light.p-1
+                  button(class="btn btn-danger btn-sm ml-1" data-toggle="tooltip", data-placement="top", title="Xóa") 
+                    i.fa-solid.fa-trash-can.p-1 
+    
+          else   
+              tr   
+                  td.text-center.py-4(colspan="7")  
+                      .text-muted No accounts found
