@@ -27,12 +27,12 @@ module.exports.loginPost = async (req, res) => {
     return;
   }
   const checkPassword = await verify.verifyPassword(password, user.password);
-  if(!checkPassword) {
+  if (!checkPassword) {
     req.flash("error", "sai mật khẩu!");
     res.redirect("back");
     return;
   }
-  if(user.status == "inactive") {
+  if (user.status == "inactive") {
     req.flash("error", "Tài khoản đã bị khóa!");
     res.redirect("back");
     return;
@@ -45,4 +45,10 @@ module.exports.loginPost = async (req, res) => {
     sameSite: "strict",
   });
   res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
+};
+
+// [GET] /admin/auth/logout
+module.exports.logout = (req, res) => {
+  res.clearCookie("token");
+  res.redirect(`${systemConfig.prefixAdmin}/auth/login`);
 };
