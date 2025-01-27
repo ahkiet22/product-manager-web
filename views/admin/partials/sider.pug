@@ -5,23 +5,28 @@
         a(href=`${prefixAdmin}/dashboard`)
           i.fa-solid.fa-gauge.mr-2
           span Tổng quan
-      li 
-        a(href=`${prefixAdmin}/products-category`)
-          i.fa-solid.fa-table-list.mr-2
-          span Danh mục sản phẩm
-      li 
-        a(href=`${prefixAdmin}/products`)
-          i.fa-brands.fa-product-hunt.mr-2
-          span Danh mục sản phẩm
-      li 
-        a(href=`${prefixAdmin}/roles`)
-          i.fa-solid.fa-users-gear.mr-2
-          span Nhóm quyền
-      li 
-        a(href=`${prefixAdmin}/roles/permissions`)
-          i.fa-solid.fa-person-circle-question.mr-2
-          span Phân quyền
-      li 
-        a(href=`${prefixAdmin}/accounts`)
-          i.fa-solid.fa-user.mr-2
-          span Danh sách tài khoản
+      if(role.permissions.includes("product-category_view"))
+        li 
+          a(href=`${prefixAdmin}/products-category`)
+            i.fa-solid.fa-table-list.mr-2
+            span Danh mục sản phẩm
+      if(role.permissions.includes("product_view"))
+        li 
+          a(href=`${prefixAdmin}/products`)
+            i.fa-brands.fa-product-hunt.mr-2
+            span Danh sách sản phẩm
+      if(role.permissions.includes("roles_view"))
+        li 
+          a(href=`${prefixAdmin}/roles`)
+            i.fa-solid.fa-users-gear.mr-2
+            span Nhóm quyền
+      if(role.permissions.includes("roles_permissions"))
+        li 
+          a(href=`${prefixAdmin}/roles/permissions`)
+            i.fa-solid.fa-person-circle-question.mr-2
+            span Phân quyền
+      if(role.permissions.includes("accounts_view"))
+        li 
+          a(href=`${prefixAdmin}/accounts`)
+            i.fa-solid.fa-user.mr-2
+            span Danh sách tài khoản
