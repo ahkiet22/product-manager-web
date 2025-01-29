@@ -182,7 +182,7 @@ if (sort) {
     url.searchParams.delete("sortKey");
     url.searchParams.delete("sortValue");
     sortSelect.value = "";
-    console.log("OK");
+    // console.log("OK");
     window.location.href = url.href;
   });
 

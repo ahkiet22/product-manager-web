@@ -64,9 +64,9 @@ module.exports.index = async (req, res) => {
 
   for (const product of products) {
     const user = await Account.findOne({
-      _id: product.createdBy.account_id
+      _id: product.createdBy.account_id,
     });
-    if(user) {
+    if (user) {
       product.accountFullName = user.fullName;
     }
   }
@@ -121,7 +121,15 @@ module.exports.changeMulti = async (req, res) => {
     case "delete-all":
       await Product.updateMany(
         { _id: { $in: ids } },
-        { $set: { deleted: true, deletedAt: new Date() } }
+        {
+          $set: {
+            deleted: true,
+            deletedBy: {
+              account_id: res.locals.user.id,
+              deletedAt: Date.now(),
+            },
+          },
+        }
       );
       req.flash("success", `Đã xóa thành công ${ids.length} sản phẩm!`);
       break;
@@ -150,7 +158,10 @@ module.exports.deleteItem = async (req, res) => {
       { _id: id },
       {
         deleted: true,
-        deletedAt: new Date(),
+        deletedBy: {
+          account_id: res.locals.user.id,
+          deletedAt: Date.now(),
+        },
       }
     ); // Xóa mềm
   }
@@ -195,8 +206,8 @@ module.exports.createPost = async (req, res) => {
   }
 
   req.body.createdBy = {
-    account_id: res.locals.user.id
-  }
+    account_id: res.locals.user.id,
+  };
 
   const product = new Product(req.body);
   await product.save();
