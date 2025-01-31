@@ -1,3 +1,5 @@
+include ../mixins/sub-menu.pug
+
 header.header
   .container
     .row.align-items-center 
@@ -7,9 +9,13 @@ header.header
             img(src="/images/logo.svg", alt="Logo")
 
       .col-9 
-        .inner-menu 
+        .inner-menu
           ul 
             li 
               a(href="/") Trang chủ
-            li  
-              a(href="/products") Sản phẩm
+            li(class="sub-menu")
+              - const pathProduct = "/products"
+              a(href=pathProduct) Sản phẩm
+                i.fa-solid.fa-chevron-down.ml-2
+              +sub-menu(layoutProductsCategory, pathProduct)
+              

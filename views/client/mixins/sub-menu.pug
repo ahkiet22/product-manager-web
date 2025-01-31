@@ -1,0 +1,10 @@
+mixin sub-menu(items, path)
+  ul
+    each item in items
+      li 
+        a(href=`${path}/${item.slug}` class="d-flex justify-content-between align-items-center")
+          span #{item.title}
+          if item.children && item.children.length > 0
+            i.fa-solid.fa-chevron-left
+        if item.children && item.children.length > 0
+          +sub-menu(item.children, path)
