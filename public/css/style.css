@@ -43,16 +43,23 @@
 .product-item {
   border: 1px solid #ddd;
   border-radius: 8px;
-  width: 200px;
   padding: 6px 12px;
 }
 
 .product-item .inner-image {
   width: 100%;
+  aspect-ratio: 4/3;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+.product-item .inner-featured {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 .product-item .inner-image img {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
 }
 .product-item .inner-content .inner-title {
