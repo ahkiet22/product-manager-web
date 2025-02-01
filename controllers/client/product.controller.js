@@ -21,15 +21,26 @@ module.exports.index = async (req, res) => {
   });
 };
 
-// [GET] /products/:slug
+// [GET] /products/detail/:slugCategory
 module.exports.detail = async (req, res) => {
   try {
     const find = {
       deleted: false,
-      slug: req.params.slug,
+      slug: req.params.slugCategory,
       status: "active",
     };
     const product = await Product.findOne(find);
+    if (product.product_category_id) {
+      const category = await ProductCategory.findOne({
+        _id: product.product_category_id,
+        status: "active",
+        deleted: false,
+      });
+      product.category = category;
+    }
+
+    product.priceNew = productsHelper.priceNewProductsOne(product);
+
     res.render("client/pages/products/detail.pug", {
       pageTitle: "Chi tiết sản phẩm",
       product: product,
@@ -46,8 +57,10 @@ module.exports.category = async (req, res) => {
     status: "active",
     deleted: false,
   });
-  
-  const listSubcategory = await productsCategoryHelper.getSubCategory(category.id);
+
+  const listSubcategory = await productsCategoryHelper.getSubCategory(
+    category.id
+  );
 
   const listSubcategoryId = listSubcategory.map((item) => item.id);
 
