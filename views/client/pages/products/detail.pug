@@ -26,7 +26,7 @@ block main
               div(class="mb-4") Còn lại: <b>#{product.stock}</b>
 
             form(
-              action=`cart/add/${product.id}`
+              action=`/cart/add/${product.id}`
               method="POST"
             )
               input(
