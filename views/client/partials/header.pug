@@ -35,4 +35,8 @@ header.header
               a(href=pathProduct) Sản phẩm
                 i.fa-solid.fa-chevron-down.ml-2
               +sub-menu(layoutProductsCategory, pathProduct)
+            li
+              a(href="#" class="cart-product")
+                i.fa-solid.fa-cart-shopping
+                  span.quantity-cart #{miniCart ? miniCart.totalQuantity : 0}
               
