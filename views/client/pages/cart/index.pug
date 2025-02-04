@@ -1,0 +1,144 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/product-layout.pug
+
+block main
+  .container.my-4
+    .row.mb-4
+      .col-12
+        .d-flex.justify-content-between.align-items-center
+          +box-head("Shopping Cart")
+          if cart.products.length
+            span.text-muted #{cart.products.length} items in your cart
+
+    if cart.products.length
+      .row
+        .col-lg-8
+          .card.shadow-sm.mb-4
+            .card-body.p-0
+              .table-responsive
+                table.table.table-hover.mb-0
+                  thead.bg-light
+                    tr
+                      th.border-top-0 STT
+                      th.border-top-0 Product
+                      th.border-top-0.text-center Price
+                      th.border-top-0.text-center Quantity
+                      th.border-top-0.text-center Total
+                      th.border-top-0.text-center Action
+                  tbody
+                    each item, index in cart.products
+                      tr
+                        td.align-middle #{index + 1}
+                        td.align-middle
+                          .d-flex.align-items-center
+                            img.rounded.me-3(
+                              src=item.productInfo.thumbnail
+                              alt=item.productInfo.title
+                              style="width: 80px; height: 80px; object-fit: cover;"
+                            )
+                            .ml-1(style="max-width: 300px;")
+                              a.text-dark.text-decoration-none(
+                                href=`/products/detail/${item.productInfo.slug}`
+                                style="display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                              ) #{item.productInfo.title}
+                              .text-muted.small
+                                if item.productInfo.stock > 10
+                                  span.text-success
+                                    i.fas.fa-check-circle.mr-1
+                                    | In Stock
+                                else if item.productInfo.stock > 0
+                                  span.text-warning
+                                    i.fas.fa-exclamation-circle.mr-1
+                                    | Only #{item.productInfo.stock} left
+                                else
+                                  span.text-danger
+                                    i.fas.fa-times-circle.mr-1
+                                    | Out of Stock
+                        td.align-middle.text-center
+                          span $#{item.productInfo.priceNew}
+                          if item.productInfo.oldPrice
+                            small.text-muted.text-decoration-line-through $#{item.productInfo.oldPrice}
+                        td.align-middle.text-center
+                            input.form-control.text-center(
+                              type="number"
+                              name="quantity"
+                              value=item.quantity
+                              min=1
+                              max=item.productInfo.stock
+                              product-id=item.product_id
+                              style="width: 60px"
+                            )
+                        td.align-middle.text-center $#{item.totalPrice}
+                        td.align-middle.text-center
+                          a.btn.btn-sm.btn-outline-danger(
+                            href=`/cart/delete/${item.product_id}`
+                          )
+                            i.fas.fa-trash-alt
+            .card-footer.bg-white
+              .d-flex.justify-content-between.align-items-center
+                a.btn.btn-link.text-muted(href="/products")
+                  i.fas.fa-arrow-left.mr-2
+                  | Continue Shopping
+                button.btn.btn-outline-secondary(type="button" onclick="window.location.reload()")
+                  i.fas.fa-sync-alt.mr-2
+                  | Update Cart
+
+        .col-lg-4
+          .card.shadow-sm.mb-4
+            .card-header.bg-light
+              h5.mb-0 Order Summary
+            .card-body
+              .d-flex.justify-content-between.mb-2
+                span Subtotal
+                span $#{cart.totalPrice}
+              .d-flex.justify-content-between.mb-2
+                span Shipping
+                span.text-success #{cart.totalPrice >= 50 ? "Free" : "$5"}
+              .d-flex.justify-content-between.mb-2
+                span Estimated Tax
+                span Calculated at checkout
+              hr
+              .d-flex.justify-content-between.mb-3
+                span.h5 Total
+                span.h5.font-weight-bold $#{cart.totalPrice >= 50 ? cart.totalPrice : cart.totalPrice + 5}
+              a.btn.btn-primary.btn-block(href="/checkout")
+                i.fas.fa-credit-card.mr-2
+                | Proceed to Checkout
+
+          .card.shadow-sm.mb-4
+            .card-header.bg-light
+              h5.mb-0 Shipping Information
+            .card-body
+              ul.list-unstyled.mb-0
+                li.mb-2
+                  i.fas.fa-truck.text-primary.mr-2
+                  | Free shipping on orders over $50
+                li.mb-2
+                  i.fas.fa-clock.text-primary.mr-2
+                  | Delivery within 3-5 business days
+                li.mb-2
+                  i.fas.fa-undo.text-primary.mr-2
+                  | 30-day return policy
+
+          .card.shadow-sm.mb-4
+            .card-header.bg-light
+              h5.mb-0 We Accept
+            .card-body
+              .d-flex.justify-content-between.align-items-center
+                i.fab.fa-cc-visa.fa-2x(style="color: #1A1F71;")
+                i.fab.fa-cc-mastercard.fa-2x(style="color: #EB001B;")
+                i.fab.fa-cc-amex.fa-2x(style="color: #006FCF;")
+                i.fab.fa-cc-paypal.fa-2x(style="color: #003087;")
+
+    else
+      .card.shadow-sm
+        .card-body.text-center.py-5
+          i.fas.fa-shopping-cart.fa-3x.text-muted.mb-3
+          h4.text-muted No products in your cart!
+          p.text-muted.mb-4 Browse our collection and find something you love
+          a.btn.btn-primary.mt-3(href="/products")
+            i.fas.fa-arrow-left.mr-2
+            | Start Shopping
+
+  script(type="module", src="/js/cart.js")
