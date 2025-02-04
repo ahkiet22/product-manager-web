@@ -1,0 +1,12 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug 
+include ../../mixins/product-layout.pug
+
+block main 
+  .container.my-5
+    .row.justify-content-center
+      .col-lg-8
+        .text-center.mb-5
+          .display-1.text-success.mb-3
+            i.fas.fa-check-circle
+          +box-head("Order Successfully Placed!")
