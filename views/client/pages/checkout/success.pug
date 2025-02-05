@@ -10,3 +10,111 @@ block main
           .display-1.text-success.mb-3
             i.fas.fa-check-circle
           +box-head("Order Successfully Placed!")
+          .card.shadow-sm.mb-4
+          .card-header.bg-light
+            h5.mb-0
+              i.fas.fa-info-circle.mr-2
+              | Order Information
+          .card-body
+            .row.mb-3
+              .col-sm-4.text-muted Order Number:
+              .col-sm-8.font-weight-bold #{order._id}
+            .row.mb-3
+              .col-sm-4.text-muted Order Date:
+              .col-sm-8 #{order.createdAt}
+            .row.mb-3
+              .col-sm-4.text-muted Total Amount:
+              .col-sm-8.font-weight-bold.text-success $#{order.totalPrice}
+            .row.mb-3
+              .col-sm-4.text-muted Payment Method:
+              //- .col-sm-8 #{order.paymentMethod}
+            .row
+              .col-sm-4.text-muted Status:
+              .col-sm-8
+                span.badge.bg-success.px-3.py-2 Confirmed
+
+        .card.shadow-sm.mb-4
+          .card-header.bg-light
+            h5.mb-0
+              i.fas.fa-shipping-fast.mr-2
+              | Shipping Details
+          .card-body
+            .row.mb-3
+              .col-sm-4.text-muted Recipient:
+              .col-sm-8 #{order.userInfo.fullName}
+            .row.mb-3
+              .col-sm-4.text-muted Phone:
+              .col-sm-8 #{order.userInfo.phone}
+            .row.mb-3
+              .col-sm-4.text-muted Address:
+              .col-sm-8 #{order.userInfo.address}
+            .row
+              .col-sm-4.text-muted Estimated Delivery:
+              .col-sm-8 3-5 business days
+
+        .card.shadow-sm.mb-4
+          .card-header.bg-light
+            h5.mb-0
+              i.fas.fa-box-open.mr-2
+              | Order Details
+          .card-body.p-0
+            .table-responsive
+              table.table.mb-0
+                thead.bg-light
+                  tr
+                    th.border-top-0 Product
+                    th.border-top-0.text-center Quantity
+                    th.border-top-0.text-right Price
+                tbody
+                  each item in order.products
+                    tr
+                      td.align-middle
+                        .d-flex.align-items-center
+                          img.rounded.me-3(
+                            src=item.productInfo.thumbnail
+                            alt=item.productInfo.title
+                            style="width: 60px; height: 60px; object-fit: cover;"
+                          )
+                          div
+                            h6.mb-0 #{item.productInfo.title}
+                            small.text-muted SKU: #{item.productInfo._id}
+                      td.align-middle.text-center #{item.quantity}
+                      td.align-middle.text-right $#{item.totalPrice}
+                tfoot.bg-light
+                  tr
+                    td.font-weight-bold Subtotal
+                    td.text-right(colspan="2") $#{order.totalPrice}
+                  tr
+                    td.font-weight-bold Shipping
+                    td.text-right(colspan="2") #{order.totalPrice >= 50 ? "Free" : "$5"}
+                  tr
+                    td.h5.font-weight-bold Total
+                    td.h5.font-weight-bold.text-right(colspan="2") $#{order.totalPrice >= 50 ? order.totalPrice : order.totalPrice + 5}
+
+        .card.shadow-sm.mb-4
+          .card-body
+            h5.mb-4 What Happens Next?
+            .row
+              .col-md-4.text-center.mb-3.mb-md-0
+                .display-4.text-primary.mb-3
+                  i.fas.fa-envelope
+                h6.font-weight-bold Order Confirmation
+                p.small.text-muted You will receive an email confirmation with your order details.
+              .col-md-4.text-center.mb-3.mb-md-0
+                .display-4.text-primary.mb-3
+                  i.fas.fa-box
+                h6.font-weight-bold Order Processing
+                p.small.text-muted We'll start preparing your order for shipment.
+              .col-md-4.text-center
+                .display-4.text-primary.mb-3
+                  i.fas.fa-truck
+                h6.font-weight-bold Shipping
+                p.small.text-muted You'll receive tracking information once your order ships.
+
+        .text-center.mt-5
+          a.btn.btn-primary.mr-3(href="/orders")
+            i.fas.fa-list-ul.mr-2
+            | View Orders
+          a.btn.btn-outline-primary(href="/products")
+            i.fas.fa-shopping-cart.mr-2
+            | Continue Shopping
