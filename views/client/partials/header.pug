@@ -37,7 +37,11 @@ header.header
               a(href="/cart" class="cart-product")
                 i.fa-solid.fa-cart-shopping
                   span.quantity-cart #{miniCart ? miniCart.totalQuantity : 0}
-            li 
-              a(href="/user/register") Đăng ký
-            li 
-              a(href="/user/login") Đăng nhập              
+            if(user)
+              li 
+                a(href="/user/logout") Đăng xuất
+            else 
+              li 
+                a(href="/user/register") Đăng ký
+              li 
+                a(href="/user/login") Đăng nhập             
