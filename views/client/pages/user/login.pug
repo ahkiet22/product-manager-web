@@ -1,0 +1,58 @@
+extends ../../layouts/default.pug
+
+block main
+  .container.my-5
+    .row.justify-content-center
+      .col-md-6.col-lg-5
+        .card.shadow-lg
+          .card-body.p-5
+            h3.text-center.mb-4.font-weight-bold Login
+
+            form(
+              action=`/user/login`
+              method="POST"
+            )
+              .form-group.mb-4
+                label.text-muted(for="email") Email Address
+                .input-group
+                  .input-group-prepend
+                    span.input-group-text
+                      i.fas.fa-envelope
+                  input(
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                  )
+
+              .form-group.mb-4
+                label.text-muted(for="password") Password
+                .input-group
+                  .input-group-prepend
+                    span.input-group-text
+                      i.fas.fa-lock
+                  input(
+                    type="password"
+                    class="form-control" 
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                  )   
+                  span.input-group-text.text-right.display-password
+                    i.fas.fa-eye-slash
+                a(href="/user/password/forgot" class="text-decoration-none") Forgot password?
+
+              .form-group.mb-0.text-center
+                button(
+                  type="submit"
+                  class="btn btn-primary btn-block py-2 mb-4"
+                ) Login
+              a(href="/user/register" class="text-decoration-none mb-0") Don't have an account? Sign up now!  
+              hr
+              .text-center.text-muted
+                small Your satisfaction is our priority
+
+  script(type="module", src="/js/script")

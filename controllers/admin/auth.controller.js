@@ -41,6 +41,8 @@ module.exports.loginPost = async (req, res) => {
     res.redirect("back");
     return;
   }
+
+  // Lưu cookie trên httpOnly
   const oneDay = 24 * 60 * 60 * 1000;
   res.cookie("token", user.token, {
     httpOnly: true,
