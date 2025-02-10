@@ -3,6 +3,7 @@ const ForgotPassword = require("../../models/forgot-password.model");
 const hash = require("../../services/hashPassword");
 const verify = require("../../services/verifyPassword");
 const generateHelper = require("../../helpers/generate");
+const sendMailHelper = require("../../helpers/sendMail");
 
 // [GET] /user/register
 module.exports.register = async (req, res) => {
@@ -113,7 +114,7 @@ module.exports.forgotPasswordPost = async (req, res) => {
     res.redirect("back");
     return;
   }
-  const otp = generateHelper.generateRandomSNumber(8);
+  const otp = generateHelper.generateRandomSNumber(6);
   // Lưu thông tin vào DB
   const objectForgotPassword = {
     email: email,
@@ -123,6 +124,75 @@ module.exports.forgotPasswordPost = async (req, res) => {
 
   const forgotPassword = new ForgotPassword(objectForgotPassword);
   await forgotPassword.save();
+
   // Nếu tồn tại email thì gửi mã OTP qua email
-  res.send("OK");
+  const subject = "Mã OTP xác minh lấy lại mật khẩu";
+  sendMailHelper.sendMail(email, subject, user, otp);
+
+  res.redirect(`/user/password/otp?email=${email}`);
+};
+
+// [GET] /user/password/otp
+module.exports.otpPassword = async (req, res) => {
+  const email = req.query.email;
+  res.render("client/pages/user/otp-password", {
+    pageTitle: "Nhập mã OTP",
+    email: email,
+  });
+};
+
+// [POST] /user/password/otp
+module.exports.otpPasswordPost = async (req, res) => {
+  const email = req.body.email;
+  let otp = "";
+  for (let i of [1, 2, 3, 4, 5, 6]) {
+    const index = `otp${i}`;
+    otp += req.body[index];
+  }
+  const result = await ForgotPassword.findOne({
+    email: email,
+    otp: otp,
+  });
+  if (!result) {
+    req.flash("error", "OTP không hợp lệ!");
+    res.redirect("back");
+    return;
+  }
+
+  const user = await User.findOne({
+    email: email,
+  });
+
+  // Lưu cookie trên httpOnly
+  const oneDay = 24 * 60 * 60 * 1000;
+  res.cookie("tokenUser", user.tokenUser, {
+    httpOnly: true,
+    maxAge: oneDay,
+    secure: true,
+    sameSite: "strict",
+  });
+
+  res.redirect("/user/password/reset");
+};
+
+// [GET] /user/password/reset
+module.exports.resetPassword = async (req, res) => {
+  res.render("client/pages/user/reset-password", {
+    pageTitle: "Đổi mật khẩu",
+  });
+};
+
+// [POST] /user/password/reset
+module.exports.resetPasswordPost = async (req, res) => {
+  const password = await hash.hashPassword(req.body.newPassword);
+  const tokenUser = req.cookies.tokenUser;
+  await User.updateOne(
+    {
+      tokenUser: tokenUser,
+    },
+    {
+      password: password,
+    }
+  );
+  res.redirect("/");
 };
