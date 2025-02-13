@@ -1,4 +1,5 @@
 const User = require("../../models/user.model");
+const Cart = require("../../models/cart.model");
 const ForgotPassword = require("../../models/forgot-password.model");
 const hash = require("../../services/hashPassword");
 const verify = require("../../services/verifyPassword");
@@ -73,6 +74,7 @@ module.exports.loginPost = async (req, res) => {
       res.redirect("back");
       return;
     }
+
     // Lưu cookie trên httpOnly
     const oneDay = 24 * 60 * 60 * 1000;
     res.cookie("tokenUser", user.tokenUser, {
@@ -81,6 +83,28 @@ module.exports.loginPost = async (req, res) => {
       secure: true,
       sameSite: "strict",
     });
+
+    const cart = await Cart.findOne({
+      user_id: user.id,
+    });
+    if (cart) {
+      res.cookie("cartId", cart.id, {
+        httpOnly: true,
+        maxAge: oneDay,
+        secure: true,
+        sameSite: "strict",
+      });
+    } else {
+      await Cart.updateOne(
+        {
+          _id: req.cookies.cartId,
+        },
+        {
+          user_id: user.id,
+        }
+      );
+    }
+
     res.redirect("/");
   } catch (error) {
     console.error("Lỗi đăng nhập:", error);
@@ -92,6 +116,7 @@ module.exports.loginPost = async (req, res) => {
 // [GET] /user/logout
 module.exports.logout = async (req, res) => {
   res.clearCookie("tokenUser");
+  res.clearCookie("cartId");
   res.redirect("/");
 };
 
