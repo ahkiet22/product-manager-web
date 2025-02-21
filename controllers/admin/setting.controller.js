@@ -12,8 +12,7 @@ module.exports.general = async (req, res) => {
 
 // [PATCH] /admin/setting/general
 module.exports.generalPatch = async (req, res) => {
-  // const settingGeneral = new SettingGeneral(req.body);
-  // await settingGeneral.save();
-  // res.redirect("back");
-  res.send("OK")
+  const settingGeneral = new SettingGeneral(req.body);
+  await settingGeneral.save();
+  res.redirect("back");
 };

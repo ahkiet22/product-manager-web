@@ -13,7 +13,7 @@ block main
 
     form(
       action=`${prefixAdmin}/settings/general?_method=PATCH` 
-      method="POST" 
+      method="POST"  
       enctype="multipart/form-data"
     )
       // Basic Information Section
@@ -44,8 +44,9 @@ block main
                 .preview-wrapper.mt-2  
                   img.img-preview(  
                     src=generalSetting.logo
-                    upload-image-preview  
+                    upload-image-preview
                   )
+
               if settings.logo
                 img.mt-2.img-thumbnail(
                   src=(generalSetting.logo ? generalSetting.logo : "")
@@ -158,5 +159,5 @@ block main
 
       .d-flex.justify-content-end
         button.btn.btn-primary(type="submit")
-          i.fas.fa-save.me-2
+          i.fas.fa-save.me-2.mr-2
           | Save Changes
