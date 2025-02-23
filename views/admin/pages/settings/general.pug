@@ -45,14 +45,15 @@ block main
                   img.img-preview(  
                     src=generalSetting.logo
                     upload-image-preview
+                    style="width: 100px"
                   )
 
-              if settings.logo
-                img.mt-2.img-thumbnail(
-                  src=(generalSetting.logo ? generalSetting.logo : "")
-                  alt="Current logo"
-                  style="max-height: 100px"
-                ) 
+              //- if settings.logo
+              //-   img.mt-2.img-thumbnail(
+              //-     src=(generalSetting.logo ? generalSetting.logo : "")
+              //-     alt="Current logo"
+              //-     style="max-height: 100px"
+              //-   ) 
 
       // Contact Information Section
       .card.mb-4
