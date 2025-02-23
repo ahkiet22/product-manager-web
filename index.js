@@ -5,7 +5,7 @@ var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var session = require("express-session");
 var flash = require("express-flash");
-var moment = require('moment');
+var moment = require("moment");
 require("dotenv").config();
 
 const database = require("./config/database");
@@ -34,9 +34,12 @@ app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 // End Flash
 
-// TinyMCE 
-app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
-// End TinyMCE 
+// TinyMCE
+app.use(
+  "/tinymce",
+  express.static(path.join(__dirname, "node_modules", "tinymce"))
+);
+// End TinyMCE
 
 // App Locals Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
@@ -47,6 +50,11 @@ app.use(express.static(`${__dirname}/public`));
 // Route
 routeAdmin(app);
 route(app);
+app.get("*", (req, res) => {
+  res.render("client/pages/errors/404", {
+    pageTitle: "404 Not Found",
+  });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
