@@ -8,53 +8,53 @@ block main
       .col-12
         +box-head("Chat")
 
-  .row.chat-header
-    .col-12.d-flex.align-items-center.gap-3.p-3
-      if (roomInfor.typeRoom == "friend")
-        img.rounded-circle(
-          src=(roomInfor.userAvatar || "/images/avatar.svg")
-          alt="User Avatar"
-          style="width: 50px; height: 50px; object-fit: cover;"
-        )
-        .user-info
-          div.user-name.fw-bold #{roomInfor.userFullname}
-      else
-        img.rounded-circle(
-          src=(roomInfor.avatar || "/images/avatar-room-chat.png")
-          alt="Room Avatar"
-          style="width: 50px; height: 50px; object-fit: cover;"
-        )
-        .room-info
-          div.room-title.fw-bold #{roomInfor.title}
+  //- .row.chat-header
+  //-   .col-12.d-flex.align-items-center.gap-3.p-3
+  //-     if (roomInfor.typeRoom == "friend")
+  //-       img.rounded-circle(
+  //-         src=(roomInfor.userAvatar || "/images/avatar.svg")
+  //-         alt="User Avatar"
+  //-         style="width: 50px; height: 50px; object-fit: cover;"
+  //-       )
+  //-       .user-info
+  //-         div.user-name.fw-bold #{roomInfor.userFullname}
+  //-     else
+  //-       img.rounded-circle(
+  //-         src=(roomInfor.avatar || "/images/avatar-room-chat.png")
+  //-         alt="Room Avatar"
+  //-         style="width: 50px; height: 50px; object-fit: cover;"
+  //-       )
+  //-       .room-info
+  //-         div.room-title.fw-bold #{roomInfor.title}
 
-  .row
-    .col-12
-      .chat-container.chat(my-id=user.id)
-        .chat-messages#chatMessages
-          each chat in chats
-            if (chat.inforUser.id != user.id)
-              .inner-name #{chat.inforUser.fullName}
-            .message
-              div(class=(chat.inforUser.id == user.id ? "sent" : "received"))
-                .message-wrapper
-                  .avatar
-                    img(src=chat.inforUser.avatar || "/images/avatar.svg" alt="User avatar")
-                  .message-content
-                    .message-bubble #{chat.content}
-                    .message-time 10:30 AM
+  //- .row
+  //-   .col-12
+  //-     .chat-container.chat(my-id=user.id)
+  //-       .chat-messages#chatMessages
+  //-         each chat in chats
+  //-           if (chat.inforUser.id != user.id)
+  //-             .inner-name #{chat.inforUser.fullName}
+  //-           .message
+  //-             div(class=(chat.inforUser.id == user.id ? "sent" : "received"))
+  //-               .message-wrapper
+  //-                 .avatar
+  //-                   img(src=chat.inforUser.avatar || "/images/avatar.svg" alt="User avatar")
+  //-                 .message-content
+  //-                   .message-bubble #{chat.content}
+  //-                   .message-time 10:30 AM
 
-          div(class="inner-list-typing")
+  //-         div(class="inner-list-typing")
 
-        .chat-input
-          form(action="" class="d-flex align-items-center gap-2 w-100 inner-form")
-            input(type="text" placeholder="Enter your message..." class="form-control" name="content")
-            span(class="button-icon btn btn-light")
-              i.fa-regular.fa-face-smile
-            button.send-button
-              i.fas.fa-paper-plane
+  //-       .chat-input
+  //-         form(action="" class="d-flex align-items-center gap-2 w-100 inner-form")
+  //-           input(type="text" placeholder="Enter your message..." class="form-control" name="content")
+  //-           span(class="button-icon btn btn-light")
+  //-             i.fa-regular.fa-face-smile
+  //-           button.send-button
+  //-             i.fas.fa-paper-plane
 
-  div(class="tooltip" role="tooltip")
-    emoji-picker(class="light")
+  //- div(class="tooltip" role="tooltip")
+  //-   emoji-picker(class="light")
 
   style.
     .chat-container {

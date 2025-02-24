@@ -39,6 +39,8 @@ header.header
                   span.quantity-cart #{miniCart ? miniCart.totalQuantity : 0}
             if(user)
               li 
+                a(href="/chat") chat
+              li 
                 a(href="/user/info") #{user.fullName}
               li 
                 a(href="/user/logout") Đăng xuất
