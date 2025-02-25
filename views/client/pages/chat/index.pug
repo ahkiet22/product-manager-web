@@ -3,7 +3,6 @@ include ../../mixins/box-head.pug
 
 block main
   .container.my-3
-
     .row
       .col-12
         +box-head("Chat")
@@ -32,16 +31,15 @@ block main
       .chat-container.chat(my-id=user.id)
         .chat-messages#chatMessages
           each chat in chats
-            if (chat.user_id != user.id)
-              .inner-name #{chat.inforUser.fullName}
-            .message
-              div(class=(chat.user_id == user.id ? "sent" : "received"))
-                .message-wrapper
-                  .avatar
-                    //- img(src=chat.inforUser.avatar || "/images/avatar.svg" alt="User avatar")
-                  .message-content
-                    .message-bubble #{chat.content}
-                    .message-time 10:30 AM
+            div(class=(chat.user_id == user.id ? "sent" : "received"))
+              if (chat.user_id != user.id)
+                .inner-name #{chat.infoUser.fullName}
+              .message-wrapper
+                .avatar
+                  //- img(src=chat.inforUser.avatar || "/images/avatar.svg" alt="User avatar")
+                .message-content
+                  .message-bubble #{chat.content}
+                  .message-time 10:30 AM
 
           div(class="inner-list-typing")
 
@@ -72,18 +70,13 @@ block main
       padding: 20px;
     }
 
-    .message {
-      display: flex;
-      margin-bottom: 20px;
-    }
-
     /* Điều chỉnh tin nhắn sent sang phải */
-    .message .sent {
+    .sent {
       justify-content: flex-end;
       margin-left: auto;
     }
 
-    .message .received {
+    .received {
       justify-content: flex-start;
     }
 
@@ -101,10 +94,10 @@ block main
       opacity: 0;
     }
 
-    .message-content {
-      max-width: 60%;
-      word-wrap: break-word;
-    }
+    //- .message-content {
+    //-   max-width: 60%;
+    //-   word-wrap: break-word;
+    //- }
 
     .message-bubble {
       padding: 12px 16px;
@@ -202,5 +195,5 @@ block main
 
     .inner-name {
       margin-bottom: 5px;
-      padding-left: 50px;
+      font-weight: 600;
     }
