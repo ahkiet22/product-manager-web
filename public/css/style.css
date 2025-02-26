@@ -198,3 +198,12 @@
   background-color: red;
   padding: 5px 6px;
 }
+
+/* Emoji icon  */
+.tooltip:not(.shown) {
+  display: none;
+}
+.tooltip.shown {
+  opacity: 1;
+}
+/* End Emoji icon  */
